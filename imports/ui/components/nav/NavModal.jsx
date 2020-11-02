@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { FiBatteryCharging, FiUsers, FiSliders, FiPower } from 'react-icons/fi';
+import { FiBatteryCharging, FiUsers, FiSliders, FiPower, FiBell } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
@@ -66,6 +66,17 @@ const NavModal = (props) => {
               }
             >
               <FiBatteryCharging size={40} color='#70EC1A' />
+            </Link>
+            <Link
+              to={'/alarmHistory'}
+              className='col text-center hoverButton'
+              style={
+                pathname === '/alarmHistory'
+                  ? { display: 'none' }
+                  : { borderRight: '2px solid white', cursor: 'pointer' }
+              }
+            >
+              <FiBell size={40} color='#70EC1A' />
             </Link>
             {Roles.userIsInRole(Meteor.userId(), 'admin') && (
               <Link

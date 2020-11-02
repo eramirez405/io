@@ -138,6 +138,7 @@ const Trent = ({ location: { pathname } }) => {
                 })
               );
             }
+            setValidation('')
           }
         }
       );

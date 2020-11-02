@@ -56,8 +56,6 @@ if (Meteor.isServer) {
         filterObj[e.value] = 1;
       });
 
-      console.log(filterObj);
-
       try {
         const res = await Historic.find(
           {
@@ -69,7 +67,53 @@ if (Meteor.isServer) {
           { fields: { ...filterObj, date: 1 }, limit: 8000 }
         ).fetch();
 
-        console.log(display, startDate, endDate, filters);
+        return res;
+      } catch (err) {
+        console.log(err);
+        return { error: err };
+      }
+    },
+    getHistoryAlarms: async (display, startDate, endDate) => {
+      check(display, String);
+      check(startDate, Date);
+      check(endDate, Date);
+
+      const filters = [
+        'AlarmHiVL1',
+        'AlarmHiVL2',
+        'AlarmHiVL3',
+        'AlarmLwVL1',
+        'AlarmLwVL2',
+        'AlarmLwVL3',
+        'AlarmIL1',
+        'AlarmIL2',
+        'AlarmIL3',
+        'AlarmTHDV1',
+        'AlarmTHDV2',
+        'AlarmTHDV3',
+        'AlarmTHDI1',
+        'AlarmTHDI2',
+        'AlarmTHDI3',
+        'AlarmHiF',
+        'AlarmLwF',
+        'AlarmHiFP',
+        'AlarmLwFP']
+
+      let filterObj = {};
+      filters.forEach((e) => {
+        filterObj[e] = 1;
+      });
+
+      try {
+        const res = await Historic.find(
+          {
+            date: {
+              $gte: startDate,
+              $lt: endDate,
+            },
+          },
+          { fields: { ...filterObj, date: 1 }, limit: 8000 }
+        ).fetch();
 
         return res;
       } catch (err) {

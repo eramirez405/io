@@ -15,6 +15,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Trent from './components/trent/Trent';
 import UserManagement from './components/userManagement/UserManagement';
 import Register from './components/auth/Register';
+import AlarmHistory from './components/alarmHistory/AlarmHistory'
 
 export const App = () => {
   const useAccount = () =>
@@ -47,7 +48,13 @@ export const App = () => {
           ) : (
             <Route exact path='/' component={() => <Login />} />
           )}
+          <PrivateRoute
+              exact
+              path='/dashboard/:display'
+              component={(props) => <Dashboard user={user} {...props} />}
+            />
           <PrivateRoute exact path='/trent' component={Trent} />
+          <PrivateRoute exact path='/alarmHistory' component={AlarmHistory} />
           <AdminRoute exact path='/userManagement' component={UserManagement} />
           <AdminRoute exact path='/register' component={Register} />
         </Switch>
